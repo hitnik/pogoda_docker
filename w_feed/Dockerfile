@@ -7,13 +7,12 @@ WORKDIR /usr/src/app
 
 #install git
 RUN apk update && apk add git
+RUN apk add nano
 
 #clone project from git
-RUN git clone https://github.com/hitnik/pogoda_feed.git
+RUN git clone https://github.com/hitnik/pogoda_feed.git ./
 
-#set work dirrectory inside project from git
-WORKDIR /usr/src/app/pogoda_feed
-
+RUN git checkout
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -29,6 +28,8 @@ RUN mkdir -p ./static
 #run migrations
 RUN python manage.py migrate
 
+#load fixtures
+RUN python manage.py loaddata hazard_feed/fixtures/hazard_levels.json
+
 #run collectstatic
 RUN python manage.py collectstatic --no-input
-
