@@ -3,14 +3,16 @@ FROM python:3.8.1-alpine3.11
 
 # set work directory
 RUN mkdir -p /usr/src/app
+
 WORKDIR /usr/src/app
+COPY ./env.py /usr/src/app/env.py
 
 #install git
 RUN apk update && apk add git
 RUN apk add nano
 
 #clone project from git
-RUN git clone https://github.com/hitnik/pogoda_feed.git ./
+RUN git clone https://github.com/hitnik/pogoda_feed.git .
 
 RUN git checkout
 
