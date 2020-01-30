@@ -3,10 +3,11 @@ version: '3.7'
 services:
   pogoda:
     build: ./w_feed
-#    entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
-    command:  python ./manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - ./w_feed/:/usr/src/app/
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py loaddata hazard_feed/fixtures/hazard_levels.json &&
+             python manage.py collectstatic --no-input &&
+             python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     env_file: w_feed.env
@@ -21,6 +22,9 @@ services:
     env_file: w_feed.env
     depends_on:
       - redis
+    environment:
+      WAIT_HOSTS:
+        -redis:6379
   redis:
     image: redis:5.0.7-alpine
     ports:
