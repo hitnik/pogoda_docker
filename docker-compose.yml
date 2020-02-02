@@ -7,27 +7,32 @@ services:
       sh -c "python manage.py migrate &&
              python manage.py loaddata hazard_feed/fixtures/hazard_levels.json &&
              python manage.py collectstatic --no-input &&
-             python manage.py schedule_jobs &&
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
-    env_file: w_feed.env
-    environment:
-      WAIT_HOSTS:
-        -redis:6379
+    env_file:
+      - w_feed.env
     depends_on:
       - redis
+      - worker
+      - scheduler
   worker:
     image: pogoda_docker_pogoda
     command: python manage.py rqworker high default low
-    env_file: w_feed.env
+    env_file:
+      - w_feed.env
     depends_on:
       - redis
-    environment:
-      WAIT_HOSTS:
-        -redis:6379
+  scheduler:
+    image: pogoda_docker_pogoda
+    command: python manage.py rqscheduler --host redis --port 6379 --db 0
+    env_file:
+      - w_feed.env
+    depends_on:
+      - redis
   redis:
     image: redis:5.0.7-alpine
+    container_name: redis
     ports:
       - 6379:6379
     restart: always
