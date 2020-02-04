@@ -26,11 +26,9 @@ RUN pip install -r requirements.txt --no-cache-dir
 #make stsic dir
 RUN mkdir -p ./static
 
-##run migrations
-#RUN python manage.py migrate
-#
-##load fixtures
-#RUN python manage.py loaddata hazard_feed/fixtures/hazard_levels.json
-#
-##run collectstatic
-#RUN python manage.py collectstatic --no-input
+#run migrations
+RUN python manage.py migrate
+
+#load fixtures
+RUN python manage.py loaddata hazard_feed/fixtures/hazard_levels.json
+

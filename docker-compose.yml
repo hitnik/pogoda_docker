@@ -4,9 +4,7 @@ services:
   pogoda:
     build: ./w_feed
     command:  >
-      sh -c "python manage.py migrate &&
-             python manage.py loaddata hazard_feed/fixtures/hazard_levels.json &&
-             python manage.py collectstatic --no-input &&
+      sh -c "python manage.py collectstatic --no-input &&
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
@@ -25,7 +23,7 @@ services:
       - redis
   scheduler:
     image: pogoda_docker_pogoda
-    command: python manage.py rqscheduler --host redis --port 6379 --db 0
+    command: python manage.py rqscheduler
     env_file:
       - w_feed.env
     depends_on:
