@@ -3,23 +3,22 @@ version: '3.7'
 services:
   pogoda:
     build: ./w_feed
-    command:  >
-      sh -c "python manage.py collectstatic --no-input &&
-             python manage.py runserver 0.0.0.0:8000"
+#    entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
     env_file:
       - w_feed.env
     depends_on:
+      - db
       - redis
-      - worker
-      - scheduler
   worker:
     image: pogoda_docker_pogoda
     command: python manage.py rqworker high default low
     env_file:
       - w_feed.env
     depends_on:
+      - db
       - redis
   scheduler:
     image: pogoda_docker_pogoda
@@ -27,6 +26,7 @@ services:
     env_file:
       - w_feed.env
     depends_on:
+      - db
       - redis
   redis:
     image: redis:5.0.7-alpine
@@ -36,5 +36,15 @@ services:
     restart: always
     volumes:
       - redis_data:/data
+  db:
+    image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    restart: always
+    env_file:
+      - w_feed.env
 volumes:
   redis_data:

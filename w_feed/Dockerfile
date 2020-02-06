@@ -19,9 +19,16 @@ RUN git checkout
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+
+RUN apk add gcc
+RUN apk add --no-cache libressl-dev musl-dev libffi-dev
+
+
+
 # install dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt --no-cache-dir
+
 
 #make stsic dir
 RUN mkdir -p ./static
