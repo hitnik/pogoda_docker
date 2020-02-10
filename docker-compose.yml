@@ -37,15 +37,11 @@ services:
     volumes:
       - redis_data:/data
   db:
-    image: mysql:latest
-    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    image: postgres:latest-alpine
     volumes:
-      - mysql:/var/lib/mysql
-    ports:
-      - 3306:3306
-    restart: always
+      - postgres_data:/var/lib/postgresql/data/
     env_file:
       - w_feed.env
 volumes:
   redis_data:
-  mysql:
+  postgres_data:

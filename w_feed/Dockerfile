@@ -27,15 +27,17 @@ RUN apk add --no-cache libressl-dev musl-dev libffi-dev
 
 # install dependencies
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt --no-cache-dir
+RUN \
+ apk add --no-cache postgresql-libs && \
+ apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
+ python3 -m pip install -r requirements.txt --no-cache-dir && \
+ apk --purge del .build-deps
 
 
 #make stsic dir
 RUN mkdir -p ./static
 
-##run migrations
-#RUN python manage.py migrate
-#
-##load fixtures
-#RUN python manage.py loaddata hazard_feed/fixtures/hazard_levels.json
+#run migrations
+RUN python manage.py migrate
+
 
