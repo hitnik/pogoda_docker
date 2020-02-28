@@ -30,18 +30,19 @@ services:
       - redis
   redis:
     image: redis:5.0.7-alpine
-    container_name: redis
+    container_name: redis_pogoda
     ports:
       - 6379:6379
     restart: always
     volumes:
       - redis_data:/data
   db:
-    image: postgres:latest-alpine
+    image: postgres:12.1-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgre sql/data/
     env_file:
-      - w_feed.env
+      - db.env
+    restart: always
 volumes:
   redis_data:
   postgres_data:
