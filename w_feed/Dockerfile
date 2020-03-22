@@ -11,9 +11,10 @@ RUN apk update && apk add git
 RUN apk add nano
 
 #clone project from git
-RUN git clone https://github.com/hitnik/pogoda_feed.git .
 
-RUN git checkout
+RUN git clone https://github.com/hitnik/pogoda_feed.git .
+RUN git checkout master
+
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
