@@ -38,7 +38,7 @@ RUN \
 #make stsic dir
 RUN mkdir -p ./static
 
-run migrations
+#run migrations
 RUN python manage.py migrate
 
 
