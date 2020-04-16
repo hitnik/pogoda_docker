@@ -33,7 +33,7 @@ services:
     container_name: redis_pogoda
     ports:
       - 6379:6379
-    restart: always
+    restart: unless-stopped
     volumes:
       - redis_data:/data
   db:
@@ -42,7 +42,7 @@ services:
       - postgres_data:/var/lib/postgre sql/data/
     env_file:
       - w_feed.env
-    restart: always
+    restart: unless-stopped
 volumes:
   redis_data:
   postgres_data:
