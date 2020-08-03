@@ -5,8 +5,8 @@ services:
     build: ./w_feed
     entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
     command: python manage.py runserver 0.0.0.0:8000
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     env_file:
       - w_feed.env
     depends_on:
@@ -43,6 +43,21 @@ services:
     env_file:
       - w_feed.env
     restart: unless-stopped
+  nginx:
+    build: ./nginx
+    environment: 
+      - WEATHER_API_HOST_PROD=http://pogoda:8000
+    volumes:
+      - www:/usr/src/app/dist
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - pogoda
 volumes:
   redis_data:
   postgres_data:
+  static_volume:
+  media_volume:  
+  www:
