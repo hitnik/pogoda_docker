@@ -5,13 +5,23 @@ services:
     build: ./w_feed
     entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
     command: gunicorn pogoda_feed.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - 8000:8000
+    expose: 
+      - 8000
     env_file:
       - w_feed.env
     depends_on:
       - db
       - redis
+  pogoda_ui:
+    build: ./pogoda_ui
+    entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
+    command: http-server ./dist -p=3000
+    environment: 
+      - API_HOST=http://pogoda:8000 
+    expose: 
+     - 3000
+    depends_on: 
+      - pogoda
   worker:
     image: pogoda_docker_pogoda
     command: python manage.py rqworker high default low
@@ -33,7 +43,7 @@ services:
     container_name: redis_pogoda
     ports:
       - 6379:6379
-    restart: always
+    restart: unless-stopped
     volumes:
       - redis_data:/data
   db:
@@ -43,6 +53,19 @@ services:
     env_file:
       - db.env
     restart: always
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 80:80
+      - 8080:8080
+    depends_on:
+      - pogoda
+      - pogoda_ui
 volumes:
   redis_data:
   postgres_data:
+  static_volume:
+  media_volume:
