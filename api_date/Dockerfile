@@ -30,3 +30,4 @@ RUN \
  apk --purge del .build-deps
 
 
+RUN python -m nltk.downloader stopwords

@@ -15,7 +15,7 @@ services:
   api_date:
     build: ./api_date
 #      entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
-    command: python -m flask run
+    command: python -m flask run --host=0.0.0.0
     ports:
       - 5000:5000
   pogoda_ui:
