@@ -53,7 +53,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgre sql/data/
     env_file:
-      - db.env
+      - w_feed.env
     restart: always
   nginx:
     build: ./nginx
