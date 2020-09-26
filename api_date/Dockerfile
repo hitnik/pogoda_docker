@@ -31,4 +31,4 @@ RUN pip install --upgrade pip
 RUN python3 -m pip install -r requirements.txt --no-cache-dir
 
 
-RUN python -m nltk.downloader stopwordsdo
+RUN python -m nltk.downloader stopwords
