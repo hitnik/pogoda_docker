@@ -32,3 +32,4 @@ RUN python3 -m pip install -r requirements.txt --no-cache-dir
 
 
 RUN python -m nltk.downloader stopwords
+RUN python -m nltk.downloader punkt
