@@ -15,7 +15,7 @@ services:
   api_date:
     build: ./api_date
 #      entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
-    command: python -m flask run --host=0.0.0.0
+    command: gunicorn -w 1 -b 0.0.0.0:5000 wsgi:app
     ports:
       - 5000:5000
   pogoda_ui:
@@ -53,7 +53,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgre sql/data/
     env_file:
-      - db.env
+      - w_feed.env
     restart: always
   nginx:
     build: ./nginx

@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8.1-alpine3.11
+FROM python:3.8-alpine
 
 # set work directory
 RUN mkdir -p /usr/src/app
@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 
 #install git
 RUN apk update && apk add git
-RUN apk add nano
 
 #clone project from git
 

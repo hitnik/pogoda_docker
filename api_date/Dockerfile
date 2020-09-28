@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8-buster
+FROM hitnik/python-sklearn-alpine:0.1
 
 # set work directory
 RUN mkdir -p /usr/src/app
@@ -7,7 +7,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 #install git
-RUN apt update && apt install git
+RUN apk update && apk add git
 
 #clone project from git
 
@@ -29,7 +29,6 @@ ENV PYTHONUNBUFFERED 1
 # install dependencies
 RUN pip install --upgrade pip
 RUN python3 -m pip install -r requirements.txt --no-cache-dir
-
 
 RUN python -m nltk.downloader stopwords
 RUN python -m nltk.downloader punkt
