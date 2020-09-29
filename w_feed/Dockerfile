@@ -33,6 +33,7 @@ RUN \
  python3 -m pip install -r requirements.txt --no-cache-dir && \
  apk --purge del .build-deps
 
+RUN python -m nltk.downloader punkt
 
 #make stsic dir
 RUN mkdir -p ./static

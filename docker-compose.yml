@@ -12,6 +12,8 @@ services:
     depends_on:
       - db
       - redis
+    links:
+      - api_date
   api_date:
     build: ./api_date
 #      entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
