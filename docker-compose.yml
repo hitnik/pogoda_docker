@@ -16,7 +16,8 @@ services:
       - api_date
   api_date:
     build: ./api_date
-#      entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
+    volumes:
+      - ./api_date/:/usr/src/app/
     command: gunicorn -w 1 -b 0.0.0.0:5000 wsgi:app
     expose:
       - 5000
