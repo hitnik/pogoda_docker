@@ -16,11 +16,8 @@ RUN git checkout master
 COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 
 # Build args
-ARG API_HOST
-
-# Environment vars
-ENV API_HOST=$API_HOST
-
+ENV API_HOST 1010111
+ENV PRODUCTION TRUE
 
 #install node dependencies
 RUN npm install

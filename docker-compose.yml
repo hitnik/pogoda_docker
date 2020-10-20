@@ -18,8 +18,8 @@ services:
     build: ./api_date
 #      entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
     command: gunicorn -w 1 -b 0.0.0.0:5000 wsgi:app
-    ports:
-      - 5000:5000
+    expose:
+      - 5000
   pogoda_ui:
     build: ./pogoda_ui
     entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
