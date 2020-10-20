@@ -1,5 +1,7 @@
 FROM node:14.7-alpine
 
+ADD https://api.github.com/repos/hitnik/pogoda_ui/git/refs/heads/master version.json
+
 # set work directory
 RUN mkdir -p /usr/src/app
 
@@ -9,7 +11,7 @@ WORKDIR /usr/src/app
 RUN apk update && apk add git
 
 #clone project from git
-RUN git clone https://github.com/hitnik/pogoda_ui.git .
+RUN git clone -b master https://github.com/hitnik/pogoda_ui.git .
 RUN git checkout master
 
 # copy entrypoint.sh
