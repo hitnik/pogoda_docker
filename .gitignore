@@ -2,3 +2,4 @@ w_feed.env
 env.py
 db.env
 .idea
+./nginx/data/certs
