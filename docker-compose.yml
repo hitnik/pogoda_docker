@@ -23,8 +23,8 @@ services:
     build: ./pogoda_ui
     entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
     command: http-server ./dist -p=3000
-    ports:
-     - 3000:3000
+    expose:
+     - 3000
   worker:
     image: pogoda_docker_pogoda
     command: python manage.py rqworker high default low
@@ -59,7 +59,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - ./nginx/data/certs:/etc/nginx/certs
+#      - ./nginx/data/certs:/etc/nginx/certs
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
     ports:
