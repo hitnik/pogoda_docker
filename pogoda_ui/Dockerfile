@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 RUN apk update && apk add git
 
 #clone project from git
-RUN git clone -b master https://github.com/hitnik/pogoda_ui.git .
+RUN git clone https://github.com/hitnik/pogoda_ui.git .
 RUN git checkout master
 
 # copy entrypoint.sh

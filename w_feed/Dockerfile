@@ -6,14 +6,13 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-ADD https://api.github.com/repos/hitnik/pogoda_feed/git/refs/heads/master version.json
 
 #install git
 RUN apk update && apk add git
 
 #clone project from git
 
-RUN git clone https://github.com/hitnik/pogoda_feed.git .
+RUN git clone  https://github.com/hitnik/pogoda_feed.git .
 RUN git checkout master
 
 
@@ -42,6 +41,6 @@ RUN python -m nltk.downloader punkt
 RUN mkdir -p ./static
 
 #run migrations
-RUN python manage.py migrate
+#RUN python manage.py migrate
 
 
