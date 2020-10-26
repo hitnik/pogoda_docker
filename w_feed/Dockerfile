@@ -6,6 +6,8 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
+ADD https://api.github.com/repos/hitnik/pogoda_feed/git/refs/heads/master version.json
+
 #install git
 RUN apk update && apk add git
 
