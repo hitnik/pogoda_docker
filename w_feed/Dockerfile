@@ -1,5 +1,7 @@
 # pull official base image
-FROM python:3.8-alpine
+вщслук шьфпуFROM hitnik/python-postgres-alpine
+
+ADD https://api.github.com/repos/hitnik/pogoda_feed/git/refs/heads/master version.json
 
 # set work directory
 RUN mkdir -p /usr/src/app
@@ -29,9 +31,6 @@ ENV PYTHONUNBUFFERED 1
 # install dependencies
 RUN pip install --upgrade pip
 RUN \
- apk add --no-cache postgresql-libs && \
- apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
- apk add --no-cache libressl-dev libffi-dev &&\
  python3 -m pip install -r requirements.txt --no-cache-dir && \
  apk --purge del .build-deps
 
