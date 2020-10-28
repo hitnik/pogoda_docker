@@ -1,5 +1,5 @@
 # pull official base image
-вщслук шьфпуFROM hitnik/python-postgres-alpine
+FROM hitnik/python-postgres-alpine
 
 ADD https://api.github.com/repos/hitnik/pogoda_feed/git/refs/heads/master version.json
 
