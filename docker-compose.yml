@@ -4,7 +4,7 @@ services:
   pogoda:
     build: ./w_feed
     entrypoint: ["sh","/usr/src/app/entrypoint.sh"]
-    command: gunicorn pogoda_feed.wsgi:application --bind 0.0.0.0:8000
+    command: daphne -b 0.0.0.0 -p 8000  pogoda_feed.asgi:application
     expose:
       - 8000
     env_file:
@@ -55,7 +55,7 @@ services:
       - postgres_data:/var/lib/postgre sql/data/
     env_file:
       - w_feed.env
-    restart: always
+    restart: on-failure
   nginx:
     build: ./nginx
     volumes:
