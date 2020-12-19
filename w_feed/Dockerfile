@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 
 #install git
 RUN apk update && apk add git
+RUN apk add build-base
 
 #clone project from git
 
@@ -29,7 +30,7 @@ ENV PYTHONUNBUFFERED 1
 
 
 # install dependencies
-RUN pip install --upgrade pip
+RUN pip install -U setuptools pip
 RUN \
  python3 -m pip install -r requirements.txt --no-cache-dir && \
  apk --purge del .build-deps
