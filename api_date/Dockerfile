@@ -1,5 +1,5 @@
 # pull official base image
-FROM hitnik/python-sklearn-alpine:0.1
+FROM hitnik/python-sklearn-alpine:0.2
 
 # set work directory
 RUN mkdir -p /usr/src/app
